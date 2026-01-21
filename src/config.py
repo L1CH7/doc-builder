@@ -14,7 +14,9 @@ DEFAULT_CONFIG = {
     "title_file": "title.docx", # Default title file name to look for
     "list_trailing_character": None, # None = inherit template
     "list_number_suffix": None, # None = inherit template
-    "heading_alignment": None # None = inherit template
+    "heading_alignment": None, # None = inherit template. Can be string or array (["center", "left"])
+    "math_font_size": None, # None = default 12.5
+    "code_font_size": None # None = default 10.5
 }
 
 def load_json_file(path):

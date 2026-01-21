@@ -1,8 +1,7 @@
 {
-    "template": "reference.docx",
+    "template": "LW_BD.docx",
     "outputs": [
-        "docx",
-        "pdf"
+        "docx"
     ],
     "mermaid": true,
     "embedfonts": true,

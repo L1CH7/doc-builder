@@ -61,15 +61,31 @@ def run_build(project_name, project_config, output_dir, root_dir):
         win_bib = linux_to_windows_path(bib_path)
         win_args.extend(["-bibliography", win_bib])
 
-    # List Formatting
-    if project_config.get("list_trailing_character"):
-        win_args.extend(["-listTrailingCharacter", project_config["list_trailing_character"]])
+    # Config construction
+    build_config = {
+        "list_trailing_character": project_config.get("list_trailing_character"),
+        "list_number_suffix": project_config.get("list_number_suffix"),
+        "heading_alignment": project_config.get("heading_alignment"),
+        # Future advanced config
+        "math_font_size": project_config.get("math_font_size"),
+        "code_font_size": project_config.get("code_font_size"),
+        # We can pass through any other config values needed by PS
+    }
+    
+    # Determine resource path (directory of the first markdown file)
+    # This helps Pandoc find images relative to the markdown file
+    if md_files:
+        resource_path = os.path.dirname(md_files[0])
+        build_config["resource_path"] = linux_to_windows_path(resource_path)
+    
+    # Write build config to JSON file
+    import json
+    config_filename = f"{project_name}_build_config.json"
+    config_path = os.path.join(output_dir, config_filename)
+    with open(config_path, "w", encoding="utf-8") as f:
+        json.dump(build_config, f, indent=4)
         
-    if project_config.get("list_number_suffix") is not None:
-         win_args.extend(["-listNumberSuffix", project_config["list_number_suffix"]])
-
-    if project_config.get("heading_alignment"):
-         win_args.extend(["-headingAlignment", project_config["heading_alignment"]])
+    win_config_path = linux_to_windows_path(config_path)
 
     # Construct PowerShell Command
     ps_command = [
@@ -78,7 +94,8 @@ def run_build(project_name, project_config, output_dir, root_dir):
         "-NoProfile",
         "-File", win_build_script,
         "-md", win_md_str,
-        "-template", win_template
+        "-template", win_template,
+        "-config", win_config_path
     ] + win_args
     
     # Construct SSH Command with quoting

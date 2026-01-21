@@ -32,8 +32,19 @@ Gostdown теперь поддерживает настройку качеств
     "embedfonts": true,
     "counters": true,
     "bibliography": true,
+    
+    // Продвинутые настройки оформления (опционально)
     "list_trailing_character": "space", // "tab", "space", "none" (отступ после номера)
-    "list_number_suffix": "." // Точка после номера (или ")", или "")
+    "list_number_suffix": ".", // Точка после номера (или ")", или "")
+    
+    // Выравнивание заголовков (строка или массив)
+    // "center" - все по центру
+    // ["center", "left"] - H1 по центру, H2 слева
+    "heading_alignment": "center",
+    
+    // Настройки шрифтов (null = наследовать из reference.docx)
+    "math_font_size": 12.5,
+    "code_font_size": 10.5
 }
 ```
 
@@ -47,8 +58,16 @@ Gostdown теперь поддерживает настройку качеств
     "template": "special-template.docx", // Искать в input/my-report/ ИЛИ в templates/
     "outputs": ["pdf"], // Генерировать только PDF
     "counters": false,
+    
+    // Переопределение стилей
     "list_trailing_character": "tab", // Переопределить отступ на Таб
-    "list_number_suffix": ")" // Использовать скобку: "1) Заголовок"
+    "list_number_suffix": ")", // Использовать скобку: "1) Заголовок"
+    
+    // Выравнивание: Глава 1 по центру, разделы слева
+    "heading_alignment": ["center", "left"],
+    
+    // Увеличенный шрифт для кода
+    "code_font_size": 11
 }
 ```
 
