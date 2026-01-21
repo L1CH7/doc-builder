@@ -1,7 +1,9 @@
 # Build artifacts
 output/
 *.docx
+!templates/*.docx
 *.pdf
+.~lock*
 
 # Temp files
 *.tmp

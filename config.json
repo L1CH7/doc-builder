@@ -1,5 +1,5 @@
 {
-    "template": "LW_BD.docx",
+    "template": "lw-template.docx",
     "outputs": [
         "docx"
     ],
@@ -7,7 +7,11 @@
     "embedfonts": true,
     "counters": true,
     "bibliography": true,
-    "list_trailing_character": "space",
-    "list_number_suffix": ".",
+    "headerNumberSuffix": ".",
+    "headerTrailingCharacter": "space",
+    "nestedListNumberSuffix": ")",
+    "nestedListTrailingCharacter": "tab",
+    "singleListNumberSuffix": ")",
+    "singleListTrailingCharacter": "tab",
     "heading_alignment": "center"
 }
