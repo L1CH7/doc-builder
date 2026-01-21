@@ -1,0 +1,14 @@
+{
+    "template": "reference.docx",
+    "outputs": [
+        "docx",
+        "pdf"
+    ],
+    "mermaid": true,
+    "embedfonts": true,
+    "counters": true,
+    "bibliography": true,
+    "list_trailing_character": "space",
+    "list_number_suffix": ".",
+    "heading_alignment": "center"
+}

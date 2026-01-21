@@ -1,0 +1,3 @@
+[submodule "gostdown"]
+	path = gostdown
+	url = https://github.com/L1CH7/gostdown.git
