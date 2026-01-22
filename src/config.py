@@ -1,62 +1,90 @@
 import os
 import json
 import glob
+import re
+import yaml
 
-# Default Configuration
-DEFAULT_CONFIG = {
-    "template": "reference.docx", 
-    "outputs": ["docx", "pdf"],
-    "mermaid": False,
-    "embedfonts": False,
-    "counters": True,
-    "bibliography": True,  # Auto-detect boolean
-    "markdown_files": [],   # Empty means auto-detect
-    "title_file": "title.docx", # Default title file name to look for
-    "list_trailing_character": None, # None = inherit template
-    "list_number_suffix": None, # None = inherit template
-    "heading_alignment": None, # None = inherit template. Can be string or array (["center", "left"])
-    "math_font_size": None, # None = default 12.5
-    "code_font_size": None # None = default 10.5
-}
+def load_yaml_file(path):
+    if os.path.exists(path):
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                return yaml.safe_load(f)
+        except Exception as e:
+            print(f"Warning: Failed to parse YAML config {path}: {e}")
+    return {}
 
 def load_json_file(path):
     if os.path.exists(path):
         try:
             with open(path, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                content = f.read()
+                # Strip comments (// ... and /* ... */)
+                content = re.sub(r'//.*', '', content)
+                content = re.sub(r'/\*.*?\*/', '', content, flags=re.DOTALL)
+                return json.loads(content)
         except Exception as e:
-            print(f"Warning: Failed to parse config {path}: {e}")
+            print(f"Warning: Failed to parse JSON config {path}: {e}")
     return {}
+
+def load_default_config():
+    # Load from src/default_config.yaml relative to this file
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Try YAML first
+    yaml_path = os.path.join(base_dir, "default_config.yaml")
+    if os.path.exists(yaml_path):
+        return load_yaml_file(yaml_path)
+        
+    # Fallback to JSON
+    json_path = os.path.join(base_dir, "default_config.json")
+    if os.path.exists(json_path):
+        return load_json_file(json_path)
+
+    return {}
+
+DEFAULT_CONFIG = load_default_config()
 
 def merge_configs(base, override):
     """
-    Merges override into base. 
-    For lists (like outputs), override replaces base.
-    For dicts, it merges keys.
+    Deep merges override into base. 
     """
     result = base.copy()
     for key, value in override.items():
-        result[key] = value
+        if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            result[key] = merge_configs(result[key], value)
+        else:
+            result[key] = value
     return result
 
 def get_project_config(project_dir, global_config_path=None, templates_dir="templates"):
     """
     Resolves the final configuration for a project.
-    Hierarchy: Defaults -> Global Config -> Project Local Config
+    Hierarchy: Defaults -> Global Config -> Project Local Config (YAML > JSON)
     """
     # 1. Start with Defaults
     config = DEFAULT_CONFIG.copy()
 
     # 2. Load Global Config
     if global_config_path and os.path.exists(global_config_path):
-        global_opts = load_json_file(global_config_path)
+        # Determine type by extension
+        if global_config_path.endswith('.yaml') or global_config_path.endswith('.yml'):
+             global_opts = load_yaml_file(global_config_path)
+        else:
+             global_opts = load_json_file(global_config_path)
         config = merge_configs(config, global_opts)
 
     # 3. Load Project Config
-    local_config_path = os.path.join(project_dir, "config.json")
-    if os.path.exists(local_config_path):
-        local_opts = load_json_file(local_config_path)
-        config = merge_configs(config, local_opts)
+    # Priority: config.yaml > config.json
+    local_yaml = os.path.join(project_dir, "config.yaml")
+    local_json = os.path.join(project_dir, "config.json")
+    
+    local_opts = {}
+    if os.path.exists(local_yaml):
+        local_opts = load_yaml_file(local_yaml)
+    elif os.path.exists(local_json):
+        local_opts = load_json_file(local_json)
+        
+    config = merge_configs(config, local_opts)
 
     # 4. Resolve Markdown Files
     # If not specified in config, find all .md files in project_dir and sort them

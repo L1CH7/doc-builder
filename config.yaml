@@ -1,0 +1,54 @@
+template: lw-template.docx
+outputs:
+  - docx
+mermaid: true
+embedfonts: true
+counters: true
+bibliography: false
+markdown_files: []
+title_file: null
+
+# Configuration for Headings
+headers:
+  # Default alignment if level is missing in 'alignment' array
+  alignment_default: left
+  # Alignment per level: [H1, H2, H3...]
+  alignment: 
+    - center
+    - left
+    - left
+  numberSuffix: "."
+  trailingCharacter: space # space, tab, none
+  indentCm: 1.25
+  # Mode for second line:
+  # "under_first": Hanging indent (text aligned with first line)
+  # "start": Flush left / block indent
+  secondLineMode: start
+  positionMode: relative_to_number
+
+# Configuration for Lists
+list:
+  numbered:
+    nested:
+      numberSuffix: ")"
+      trailingCharacter: tab
+      indentCm: 1.25
+      secondLineMode: under_first
+      positionMode: relative_to_number
+    single:
+      numberSuffix: ")"
+      trailingCharacter: tab
+      indentCm: 1.25
+      secondLineMode: under_first
+      positionMode: relative_to_number
+  bulleted:
+    bullets:
+      - "—"
+      - "•"
+    trailingCharacter: tab
+    indentCm: 1.25
+    secondLineMode: under_first
+    positionMode: relative_to_number
+
+math_font_size: 12.5
+code_font_size: 10.5

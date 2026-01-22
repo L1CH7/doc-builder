@@ -29,6 +29,7 @@ def run_build(project_name, project_config, output_dir, root_dir):
     
     # Outputs
     # Check outputs config
+    print(f"Debug: Project Config Keys: {list(project_config.keys())}")
     outputs = project_config.get("outputs", [])
     
     win_args = []
@@ -66,6 +67,9 @@ def run_build(project_name, project_config, output_dir, root_dir):
         "list_trailing_character": project_config.get("list_trailing_character"),
         "list_number_suffix": project_config.get("list_number_suffix"),
         "heading_alignment": project_config.get("heading_alignment"),
+        # New Granular Configs
+        "headers": project_config.get("headers"),
+        "list": project_config.get("list"),
         # Future advanced config
         "math_font_size": project_config.get("math_font_size"),
         "code_font_size": project_config.get("code_font_size"),
@@ -94,7 +98,7 @@ def run_build(project_name, project_config, output_dir, root_dir):
         "-NoProfile",
         "-File", win_build_script,
         "-md", win_md_str,
-        "-template", win_template,
+        "-reference", win_template,
         "-config", win_config_path
     ] + win_args
     

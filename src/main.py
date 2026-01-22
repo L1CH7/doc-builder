@@ -24,7 +24,11 @@ def main():
     project_name = os.path.basename(project_dir)
     
     # Load Configuration
-    global_config = os.path.join(root_dir, "config.json")
+    # Check for config.yaml first, then config.json
+    global_config = os.path.join(root_dir, "config.yaml")
+    if not os.path.exists(global_config):
+        global_config = os.path.join(root_dir, "config.json")
+    
     templates_dir = os.path.join(root_dir, "templates")
     
     config = get_project_config(project_dir, global_config, templates_dir)
