@@ -128,13 +128,32 @@ Gostdown (Pandoc) поддерживает pipe-tables. Для длинных т
 ![Подпись к рисунку](image.png){#fig:my-fig}
 ```
 
-Или для Mermaid:
-```markdown
-```mermaid
-graph TD; A-->B;
+Или для Mermaid :
+
+
+Ниже представлена ER-диаграмма предметной области "Автомастерская" (см. рисунок [-@fig:er]). 
+
+::: {#fig:er}
+```{.mermaid format=png scale=4}
+erDiagram
+    CAR ||--|{ ORDER : "has"
+    MECHANIC ||--|{ ORDER : "performs"
+
+    CAR {
+        string gov_number "Номер"
+    }
+
+    MECHANIC {
+        string fio "ФИО"
+    }
+
+    ORDER {
+        double cost "Стоимость"
+    }
 ```
-Figure: Подпись к диаграмме {#fig:diagram}
-```
+
+ER-диаграмма предметной области
+:::
 
 ### Перекрестные ссылки
 - На таблицу: `См. таблицу @tbl:my-table`
@@ -143,7 +162,14 @@ Figure: Подпись к диаграмме {#fig:diagram}
 ### Источники (Bibliography)
 1. Создайте файл `refs.bib` (формат BibTeX) в папке проекта.
 2. В тексте используйте ключ цитирования: `Согласно работе [@source_key]`.
-3. Скрипт автоматически найдет `.bib` файл и сформирует список литературы в конце.
+3. Скрипт автоматически найдет `.bib` файл и сформирует список литературы в конце. Работает при условии добавления:
+
+```json
+{
+    "csl": "gost-r-7-0-5-2008-numeric-iaa.csl",
+    "bibliography": "refs.bib"
+}
+```
 
 ## 4. Сборка примеров
 
