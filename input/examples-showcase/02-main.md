@@ -432,8 +432,9 @@ inkscape figure.pdf --export-emf=figure.emf --export-text-to-path
 
 ## Проверка mermaid
 
-
-```{.mermaid format=svg #fig:example}
+Какая-то схема - рисунок [-@fig:example]
+:::{#fig:example}
+```{.mermaid format=png scale=4}
 flowchart TD
     %% Входы
     subgraph Inputs ["Входные параметры (ControlMsg)"]
@@ -492,6 +493,8 @@ flowchart TD
         ParStrobe -- "thresholds" --> Detect
     end
 ```
+Схема какаято
+:::
 
 # Таблицы
 

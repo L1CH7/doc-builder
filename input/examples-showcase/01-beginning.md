@@ -29,7 +29,7 @@ chapters: true
 --------------------------------------------------------------------------------
 
 
-# [Реферат]{custom-style="UnnumberedHeadingOneNoTOC"} {#referat .unnumbered}
+# **[Реферат]**{custom-style="UnnumberedHeadingOneNoTOC"} {#referat .unnumbered}
 
 Отчёт %NPAGES% с., %NFIGURES% рис., %NTABLES% табл., %NREFERENCES% источн., %NAPPENDICES% прил.
 
@@ -59,11 +59,11 @@ Word,
 соответствующие существительные даны в сокращённой форме; существующее написание
 «глав» подойдёт к любому количеству от 2 до 20 включительно.
 
-# [Содержание]{custom-style="UnnumberedHeadingOneNoTOC"} {.unnumbered}
+# **[Содержание]**{custom-style="UnnumberedHeadingOneNoTOC"} {.unnumbered}
 
 %TOC%
 
-# [Обозначения и сокращения]{custom-style="UnnumberedHeadingOneNoTOC"} {.unnumbered}
+# **[Обозначения и сокращения]**{custom-style="UnnumberedHeadingOneNoTOC"} {.unnumbered}
 
 |    |     |    |
 |:---|:---:|:---|
@@ -71,7 +71,7 @@ Word,
 | ИПН\ ГПНД | --- | Институт прикладных наук о ГОСТах в области программной и научной документации |
 | НИР | --- | Научно-исследовательская работа |
  
-# [Введение]{custom-style="UnnumberedHeadingOne"} {.unnumbered}
+# **[Введение]**{custom-style="UnnumberedHeadingOne"} {.unnumbered}
 
 Это пример научно-технического отчёта, оформленного по ГОСТу.
 Он существует в двух формах: в виде текстового файла в формате Markdown
